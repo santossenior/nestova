@@ -1,0 +1,552 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}The Nestova Ecosystem — Brokerage · Businesses · Academy · Tourism{% endblock %}
+
+{% block extra_head %}
+<style>
+/* ============================================================
+   NESTOVA ECOSYSTEM HUB — services.html
+   ============================================================ */
+
+/* ---- HERO ---- */
+.eco-hero {
+  position: relative;
+  margin-top: 80px;
+  padding: 100px 0 80px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #060B1A 0%, #0D1B3E 55%, #060B1A 100%);
+}
+.eco-hero::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 70%);
+  top: -300px; right: -200px;
+  pointer-events: none;
+}
+.eco-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+}
+.eco-hero-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.4;
+}
+.eco-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 20px; border-radius: 50px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06));
+  border: 1px solid rgba(201,168,76,0.35);
+  color: var(--gold); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 24px;
+}
+.eco-hero-badge::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.6);opacity:0.4}
+}
+.eco-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 300; color: #fff;
+  margin-bottom: 18px; line-height: 1.1;
+}
+.eco-hero h1 em { font-style: italic; color: var(--gold-light); }
+.eco-hero p {
+  color: rgba(255,255,255,0.52); font-size: 1.05rem;
+  max-width: 600px; margin: 0 auto 40px;
+}
+.eco-hero-stats {
+  display: flex; justify-content: center; gap: 48px;
+  flex-wrap: wrap; margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.eco-hero-stat-item { text-align: center; }
+.eco-hero-stat-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 600;
+  color: var(--gold); line-height: 1;
+}
+.eco-hero-stat-lbl {
+  display: block; font-size: 0.72rem;
+  color: rgba(255,255,255,0.4); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-top: 6px;
+}
+
+/* ---- SECTION LABEL ---- */
+.section-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; margin-bottom: 12px;
+}
+.section-label .dot { width: 5px; height: 5px; border-radius: 50%; }
+
+/* ---- ECOSYSTEM CARDS GRID ---- */
+.ecosystems-section {
+  padding: 90px 0 100px;
+  background: var(--obsidian);
+}
+.ecosystems-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  margin-top: 56px;
+}
+@media(max-width:768px){ .ecosystems-grid { grid-template-columns: 1fr; } }
+
+/* ---- ECOSYSTEM CARD ---- */
+.eco-card {
+  position: relative; overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(18,18,26,0.8);
+  transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  text-decoration: none;
+  display: block;
+}
+.eco-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+  text-decoration: none;
+}
+
+/* Visual panel */
+.eco-card-visual {
+  position: relative; height: 240px; overflow: hidden;
+}
+.eco-card-visual-bg {
+  position: absolute; inset: 0;
+  background-size: cover; background-position: center;
+  transition: transform .5s ease;
+}
+.eco-card:hover .eco-card-visual-bg { transform: scale(1.06); }
+.eco-card-visual-overlay {
+  position: absolute; inset: 0;
+}
+.eco-card-number {
+  position: absolute; top: 20px; left: 20px;
+  font-family: var(--font-display);
+  font-size: 3rem; font-weight: 700;
+  opacity: 0.18; line-height: 1; color: #fff;
+}
+.eco-card-badge {
+  position: absolute; bottom: 20px; left: 20px;
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 50px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; backdrop-filter: blur(12px);
+}
+
+/* Content */
+.eco-card-content { padding: 28px 28px 32px; }
+.eco-card-icon {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 18px;
+}
+.eco-card-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem; font-weight: 500;
+  color: #fff; margin-bottom: 10px;
+}
+.eco-card-content p {
+  font-size: 0.88rem; color: rgba(255,255,255,0.5);
+  line-height: 1.7; margin-bottom: 22px;
+}
+.eco-card-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+}
+.eco-card-tag {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+  padding: 4px 12px; border-radius: 50px;
+  border: 1px solid;
+}
+.eco-card-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.82rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none;
+  padding: 12px 24px; border-radius: 10px;
+  transition: all .28s ease;
+}
+.eco-card-cta i { transition: transform .25s ease; }
+.eco-card-cta:hover i { transform: translateX(4px); }
+
+/* BROKERAGE — Gold */
+.eco-card--brokerage { border-color: rgba(201,168,76,0.18); }
+.eco-card--brokerage:hover { border-color: rgba(201,168,76,0.45); box-shadow: 0 24px 60px rgba(201,168,76,0.12); }
+.eco-card--brokerage .eco-card-visual-bg { background: linear-gradient(135deg, #0D1B3E 0%, #1A2E5E 40%, #0A0A0F 100%); }
+.eco-card--brokerage .eco-card-visual-overlay { background: linear-gradient(180deg, rgba(13,27,62,0.2) 0%, rgba(10,10,15,0.85) 100%); }
+.eco-card--brokerage .eco-card-badge { background: rgba(201,168,76,0.18); border: 1px solid rgba(201,168,76,0.35); color: var(--gold); }
+.eco-card--brokerage .eco-card-icon { background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06)); color: var(--gold); }
+.eco-card--brokerage .eco-card-tag { color: var(--gold); border-color: rgba(201,168,76,0.25); background: rgba(201,168,76,0.07); }
+.eco-card--brokerage .eco-card-cta { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000; }
+.eco-card--brokerage .eco-card-cta:hover { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #000; box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+.section-label--brokerage { color: var(--gold); }
+.section-label--brokerage .dot { background: var(--gold); }
+
+/* BUSINESSES — Emerald */
+.eco-card--businesses { border-color: rgba(26,122,74,0.22); }
+.eco-card--businesses:hover { border-color: rgba(46,204,113,0.4); box-shadow: 0 24px 60px rgba(26,122,74,0.14); }
+.eco-card--businesses .eco-card-visual-bg { background: linear-gradient(135deg, #061A0F 0%, #0D3320 40%, #060B1A 100%); }
+.eco-card--businesses .eco-card-visual-overlay { background: linear-gradient(180deg, rgba(6,26,15,0.2) 0%, rgba(6,11,26,0.85) 100%); }
+.eco-card--businesses .eco-card-badge { background: rgba(46,204,113,0.14); border: 1px solid rgba(46,204,113,0.3); color: #2ECC71; }
+.eco-card--businesses .eco-card-icon { background: linear-gradient(135deg, rgba(46,204,113,0.16), rgba(46,204,113,0.05)); color: #2ECC71; }
+.eco-card--businesses .eco-card-tag { color: #2ECC71; border-color: rgba(46,204,113,0.25); background: rgba(46,204,113,0.07); }
+.eco-card--businesses .eco-card-cta { background: linear-gradient(135deg, #1A7A4A, #145E38); color: #fff; }
+.eco-card--businesses .eco-card-cta:hover { background: linear-gradient(135deg, #2ECC71, #1A9A55); color: #fff; box-shadow: 0 8px 24px rgba(46,204,113,0.3); }
+.section-label--businesses { color: #2ECC71; }
+.section-label--businesses .dot { background: #2ECC71; }
+
+/* ACADEMY — Amber */
+.eco-card--academy { border-color: rgba(243,156,18,0.2); }
+.eco-card--academy:hover { border-color: rgba(243,156,18,0.45); box-shadow: 0 24px 60px rgba(243,156,18,0.12); }
+.eco-card--academy .eco-card-visual-bg { background: linear-gradient(135deg, #1A0F05 0%, #2E1A08 40%, #0A0A0F 100%); }
+.eco-card--academy .eco-card-visual-overlay { background: linear-gradient(180deg, rgba(26,15,5,0.2) 0%, rgba(10,10,15,0.85) 100%); }
+.eco-card--academy .eco-card-badge { background: rgba(243,156,18,0.14); border: 1px solid rgba(243,156,18,0.3); color: #F39C12; }
+.eco-card--academy .eco-card-icon { background: linear-gradient(135deg, rgba(243,156,18,0.16), rgba(243,156,18,0.05)); color: #F39C12; }
+.eco-card--academy .eco-card-tag { color: #F39C12; border-color: rgba(243,156,18,0.25); background: rgba(243,156,18,0.07); }
+.eco-card--academy .eco-card-cta { background: linear-gradient(135deg, #E67E22, #C0681A); color: #fff; }
+.eco-card--academy .eco-card-cta:hover { background: linear-gradient(135deg, #F39C12, #E67E22); color: #fff; box-shadow: 0 8px 24px rgba(243,156,18,0.3); }
+.section-label--academy { color: #F39C12; }
+.section-label--academy .dot { background: #F39C12; }
+
+/* TOURISM — Teal */
+.eco-card--tourism { border-color: rgba(26,188,156,0.2); }
+.eco-card--tourism:hover { border-color: rgba(26,188,156,0.45); box-shadow: 0 24px 60px rgba(26,188,156,0.12); }
+.eco-card--tourism .eco-card-visual-bg { background: linear-gradient(135deg, #061815 0%, #0D2E27 40%, #060B1A 100%); }
+.eco-card--tourism .eco-card-visual-overlay { background: linear-gradient(180deg, rgba(6,24,21,0.2) 0%, rgba(6,11,26,0.85) 100%); }
+.eco-card--tourism .eco-card-badge { background: rgba(26,188,156,0.14); border: 1px solid rgba(26,188,156,0.3); color: #1ABC9C; }
+.eco-card--tourism .eco-card-icon { background: linear-gradient(135deg, rgba(26,188,156,0.16), rgba(26,188,156,0.05)); color: #1ABC9C; }
+.eco-card--tourism .eco-card-tag { color: #1ABC9C; border-color: rgba(26,188,156,0.25); background: rgba(26,188,156,0.07); }
+.eco-card--tourism .eco-card-cta { background: linear-gradient(135deg, #148F77, #0F6B5A); color: #fff; }
+.eco-card--tourism .eco-card-cta:hover { background: linear-gradient(135deg, #1ABC9C, #148F77); color: #fff; box-shadow: 0 8px 24px rgba(26,188,156,0.3); }
+.section-label--tourism { color: #1ABC9C; }
+.section-label--tourism .dot { background: #1ABC9C; }
+
+/* ---- WHY NESTOVA STRIP ---- */
+.why-strip {
+  background: linear-gradient(135deg, #0D1B3E, #060B1A);
+  padding: 72px 0;
+  border-top: 1px solid rgba(201,168,76,0.12);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+.why-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 32px;
+}
+@media(max-width:900px){ .why-strip-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:540px){ .why-strip-grid { grid-template-columns: 1fr; } }
+.why-item { text-align: center; }
+.why-item-icon {
+  width: 60px; height: 60px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.14), rgba(201,168,76,0.04));
+  border: 1px solid rgba(201,168,76,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--gold);
+  margin: 0 auto 16px;
+}
+.why-item h4 {
+  font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 8px;
+}
+.why-item p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+/* ---- CLOSING CTA ---- */
+.eco-cta-block {
+  padding: 90px 0;
+  background: linear-gradient(160deg, #0A0A0F 0%, #0D1B3E 60%, #0A0A0F 100%);
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.eco-cta-block::before {
+  content: '';
+  position: absolute; width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 70%);
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  pointer-events: none;
+}
+.eco-cta-block h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 300; color: #fff; margin-bottom: 16px;
+}
+.eco-cta-block h2 em { font-style: italic; color: var(--gold-light); }
+.eco-cta-block p {
+  font-size: 1rem; color: rgba(255,255,255,0.5);
+  max-width: 560px; margin: 0 auto 40px;
+}
+.eco-cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-eco-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #000; font-weight: 700; font-size: 0.88rem;
+  padding: 14px 32px; border-radius: 12px; text-decoration: none;
+  letter-spacing: 0.05em; transition: all .28s ease;
+}
+.btn-eco-primary:hover { color: #000; box-shadow: 0 12px 32px rgba(201,168,76,0.4); transform: translateY(-2px); }
+.btn-eco-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.06); color: #fff;
+  font-weight: 600; font-size: 0.88rem;
+  padding: 14px 32px; border-radius: 12px; text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.12); transition: all .28s ease;
+}
+.btn-eco-ghost:hover { color: #fff; background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); }
+
+/* Breadcrumb */
+.breadcrumbs-glass {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 20px; border-radius: 50px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.78rem; color: rgba(255,255,255,0.5);
+}
+.breadcrumbs-glass a { color: rgba(255,255,255,0.5); text-decoration: none; }
+.breadcrumbs-glass a:hover { color: var(--gold); }
+.breadcrumbs-glass .sep { color: rgba(255,255,255,0.25); }
+.breadcrumbs-glass .current { color: var(--gold); }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+
+  <!-- ══ HERO ══════════════════════════════════════════════════ -->
+  <section class="eco-hero">
+    <div class="eco-hero-grain"></div>
+    <div class="container">
+      <div class="text-center" data-aos="fade-up">
+        <div class="eco-hero-badge">The Nestova Ecosystem</div>
+        <h1>
+          4 Pillars. One Vision.<br>
+          <em>Infinite Possibilities.</em>
+        </h1>
+        <p>
+          Nestova is more than a real estate company. We are a full-spectrum lifestyle ecosystem —
+          built to connect people to opportunities, experiences, knowledge, and global networks.
+        </p>
+        <div class="breadcrumbs-glass" style="margin-bottom:0;">
+          <a href="{% url 'home' %}">Home</a>
+          <span class="sep">›</span>
+          <span class="current">Our Ecosystem</span>
+        </div>
+      </div>
+
+      <div class="eco-hero-stats" data-aos="fade-up" data-aos-delay="100">
+        <div class="eco-hero-stat-item">
+          <span class="eco-hero-stat-num">4</span>
+          <span class="eco-hero-stat-lbl">Major Ecosystems</span>
+        </div>
+        <div class="eco-hero-stat-item">
+          <span class="eco-hero-stat-num">20+</span>
+          <span class="eco-hero-stat-lbl">Services Offered</span>
+        </div>
+        <div class="eco-hero-stat-item">
+          <span class="eco-hero-stat-num">5</span>
+          <span class="eco-hero-stat-lbl">States Covered</span>
+        </div>
+        <div class="eco-hero-stat-item">
+          <span class="eco-hero-stat-num">500+</span>
+          <span class="eco-hero-stat-lbl">Clients Served</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 4 ECOSYSTEM CARDS ════════════════════════════════════ -->
+  <section class="ecosystems-section">
+    <div class="container">
+      <div class="text-center" data-aos="fade-up">
+        <div class="section-label section-label--brokerage" style="justify-content:center;">
+          <span class="dot"></span> Our Four Pillars <span class="dot"></span>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:300;color:#fff;">
+          Every Service. <em style="font-style:italic;color:var(--gold-light);">One Ecosystem.</em>
+        </h2>
+        <p style="color:rgba(255,255,255,0.45);max-width:540px;margin:12px auto 0;font-size:0.9rem;">
+          Select an ecosystem below to explore its full range of services, opportunities, and how to get started.
+        </p>
+      </div>
+
+      <div class="ecosystems-grid">
+
+        <!-- ── 1. BROKERAGE ── -->
+        <a href="{% url 'services:brokerage' %}" class="eco-card eco-card--brokerage" data-aos="fade-up" data-aos-delay="60">
+          <div class="eco-card-visual">
+            <div class="eco-card-visual-bg" style="background: linear-gradient(135deg,#0D1B3E 0%,#1A2E5E 45%,#0A0A0F 100%);"></div>
+            <div class="eco-card-visual-overlay"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <i class="bi bi-buildings" style="font-size:5rem;color:rgba(201,168,76,0.22);"></i>
+            </div>
+            <span class="eco-card-number">01</span>
+            <span class="eco-card-badge"><i class="bi bi-patch-check-fill"></i> Trusted Solutions</span>
+          </div>
+          <div class="eco-card-content">
+            <div class="eco-card-icon"><i class="bi bi-house-door"></i></div>
+            <h3>Nestova Brokerage</h3>
+            <p>Your gateway to verified real estate in Nigeria. From buying and selling to shortlets, interior design, smart security, and industrial cleaning — we deliver premium solutions under one roof.</p>
+            <div class="eco-card-tags">
+              <span class="eco-card-tag">Property Sales</span>
+              <span class="eco-card-tag">Shortlets</span>
+              <span class="eco-card-tag">Interior Design</span>
+              <span class="eco-card-tag">SmartShield</span>
+              <span class="eco-card-tag">Cleaning</span>
+            </div>
+            <span class="eco-card-cta">Explore Brokerage <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </a>
+
+        <!-- ── 2. BUSINESSES ── -->
+        <a href="{% url 'services:businesses' %}" class="eco-card eco-card--businesses" data-aos="fade-up" data-aos-delay="120">
+          <div class="eco-card-visual">
+            <div class="eco-card-visual-bg" style="background: linear-gradient(135deg,#061A0F 0%,#0D3320 45%,#060B1A 100%);"></div>
+            <div class="eco-card-visual-overlay"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <i class="bi bi-briefcase" style="font-size:5rem;color:rgba(46,204,113,0.22);"></i>
+            </div>
+            <span class="eco-card-number">02</span>
+            <span class="eco-card-badge"><i class="bi bi-lightning-charge-fill"></i> Innovation & Lifestyle</span>
+          </div>
+          <div class="eco-card-content">
+            <div class="eco-card-icon"><i class="bi bi-briefcase"></i></div>
+            <h3>Nestova Businesses</h3>
+            <p>A lifestyle and innovation powerhouse — bringing Italian luxury paint finishes, smart gadget sourcing, premium home accessories, and next-generation smart security to Nigeria and Africa.</p>
+            <div class="eco-card-tags">
+              <span class="eco-card-tag">Valpaint 🇮🇹</span>
+              <span class="eco-card-tag">Communications</span>
+              <span class="eco-card-tag">Essentials</span>
+              <span class="eco-card-tag">SmartShield</span>
+            </div>
+            <span class="eco-card-cta">Explore Businesses <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </a>
+
+        <!-- ── 3. ACADEMY ── -->
+        <a href="{% url 'services:academy' %}" class="eco-card eco-card--academy" data-aos="fade-up" data-aos-delay="180">
+          <div class="eco-card-visual">
+            <div class="eco-card-visual-bg" style="background: linear-gradient(135deg,#1A0F05 0%,#2E1A08 45%,#0A0A0F 100%);"></div>
+            <div class="eco-card-visual-overlay"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <i class="bi bi-mortarboard" style="font-size:5rem;color:rgba(243,156,18,0.22);"></i>
+            </div>
+            <span class="eco-card-number">03</span>
+            <span class="eco-card-badge"><i class="bi bi-star-fill"></i> Learning & Growth</span>
+          </div>
+          <div class="eco-card-content">
+            <div class="eco-card-icon"><i class="bi bi-mortarboard"></i></div>
+            <h3>Nestova Academy</h3>
+            <p>Empowering the next generation of real estate professionals, entrepreneurs, and business leaders through structured training, mentorship, networking, and youth development programs.</p>
+            <div class="eco-card-tags">
+              <span class="eco-card-tag">Real Estate Training</span>
+              <span class="eco-card-tag">Mentorship</span>
+              <span class="eco-card-tag">Entrepreneurship</span>
+              <span class="eco-card-tag">Youth</span>
+            </div>
+            <span class="eco-card-cta">Explore Academy <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </a>
+
+        <!-- ── 4. TOURISM ── -->
+        <a href="{% url 'services:tourism' %}" class="eco-card eco-card--tourism" data-aos="fade-up" data-aos-delay="240">
+          <div class="eco-card-visual">
+            <div class="eco-card-visual-bg" style="background: linear-gradient(135deg,#061815 0%,#0D2E27 45%,#060B1A 100%);"></div>
+            <div class="eco-card-visual-overlay"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+              <i class="bi bi-airplane" style="font-size:5rem;color:rgba(26,188,156,0.22);"></i>
+            </div>
+            <span class="eco-card-number">04</span>
+            <span class="eco-card-badge"><i class="bi bi-globe2"></i> Travel & Culture</span>
+          </div>
+          <div class="eco-card-content">
+            <div class="eco-card-icon"><i class="bi bi-airplane"></i></div>
+            <h3>Nestova Tourism</h3>
+            <p>Connecting people to Nigeria, Africa, and the world — through curated travel, cultural heritage experiences, hospitality partnerships, and investment opportunities in tourism real estate.</p>
+            <div class="eco-card-tags">
+              <span class="eco-card-tag">Travel Packages</span>
+              <span class="eco-card-tag">Cultural Tours</span>
+              <span class="eco-card-tag">Hospitality</span>
+              <span class="eco-card-tag">Investments</span>
+            </div>
+            <span class="eco-card-cta">Explore Tourism <i class="bi bi-arrow-right"></i></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY NESTOVA STRIP ══════════════════════════════════════ -->
+  <section class="why-strip">
+    <div class="container">
+      <div class="text-center mb-5" data-aos="fade-up">
+        <div class="section-label section-label--brokerage" style="justify-content:center;">
+          <span class="dot"></span> Our Promise <span class="dot"></span>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:300;color:#fff;">
+          Why Thousands Trust <em style="font-style:italic;color:var(--gold-light);">Nestova</em>
+        </h2>
+      </div>
+      <div class="why-strip-grid">
+        <div class="why-item" data-aos="fade-up" data-aos-delay="60">
+          <div class="why-item-icon"><i class="bi bi-patch-check-fill"></i></div>
+          <h4>Verified & Trusted</h4>
+          <p>All listings, developers, and partners go through a rigorous verification process.</p>
+        </div>
+        <div class="why-item" data-aos="fade-up" data-aos-delay="120">
+          <div class="why-item-icon"><i class="bi bi-shield-lock-fill"></i></div>
+          <h4>Client Protection</h4>
+          <p>Your investment, privacy, and interests are protected at every step of the journey.</p>
+        </div>
+        <div class="why-item" data-aos="fade-up" data-aos-delay="180">
+          <div class="why-item-icon"><i class="bi bi-diagram-3-fill"></i></div>
+          <h4>One Ecosystem</h4>
+          <p>Real estate, lifestyle, education, and travel — all seamlessly connected under one brand.</p>
+        </div>
+        <div class="why-item" data-aos="fade-up" data-aos-delay="240">
+          <div class="why-item-icon"><i class="bi bi-people-fill"></i></div>
+          <h4>Community First</h4>
+          <p>We build long-term relationships that create access, opportunities, and economic empowerment.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CLOSING CTA ════════════════════════════════════════════ -->
+  <section class="eco-cta-block">
+    <div class="container" style="position:relative;z-index:2;">
+      <div data-aos="fade-up">
+        <div class="eco-hero-badge" style="margin-bottom:24px;">Ready to Begin?</div>
+        <h2>Your Journey Starts <em>Here</em></h2>
+        <p>
+          Whether you're looking to buy property, grow a business, learn a skill, or explore the world —
+          Nestova has a door open for you.
+        </p>
+        <div class="eco-cta-actions">
+          <a href="{% url 'contact' %}" class="btn-eco-primary">
+            <i class="bi bi-chat-dots"></i> Get Free Consultation
+          </a>
+          <a href="{% url 'properties' %}" class="btn-eco-ghost">
+            Browse Properties <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock content %}

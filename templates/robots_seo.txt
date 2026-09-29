@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /static/
+Allow: /media/
+Allow: /developers/
+
+Disallow: /admin/
+Disallow: /accounts/
+Disallow: /api/
+Disallow: /static/admin/
+Disallow: /search/
+
+Sitemap: https://nestovaproperty.com/sitemap.xml
+
