@@ -896,33 +896,6 @@ textarea.form-control-custom {
 
                 <!-- ── AGENT FIELDS ── -->
                 <div id="agentFields" style="display:none;">
-                  <h3 class="form-section-title"><i class="bi bi-bank" style="color:var(--gold);"></i> Bank Information</h3>
-                  <p class="form-section-subtitle">Add your bank details to receive commission payments</p>
-
-                  <div class="form-group">
-                    <label class="form-label" for="bank">Select Your Bank <span class="required-star">*</span></label>
-                    <div class="input-wrapper">
-                      <i class="bi bi-bank input-icon"></i>
-                      <select class="form-control-custom" id="bank" name="bank">
-                        <option value="">— Choose Bank —</option>
-                        {% for bank in banks %}
-                        <option value="{{ bank.id }}">{{ bank.name }}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
-                    <div class="field-error" id="bankError"><i class="bi bi-x-circle-fill"></i><span></span></div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="form-label" for="accountName">Account Name <span class="required-star">*</span></label>
-                    <div class="input-wrapper">
-                      <i class="bi bi-person-badge input-icon"></i>
-                      <input type="text" class="form-control-custom" id="accountName" name="account_name" placeholder="Full name as on bank account">
-                    </div>
-                    <small class="form-helper-text">Enter your full name as registered with your bank</small>
-                    <div class="field-error" id="accountNameError"><i class="bi bi-x-circle-fill"></i><span></span></div>
-                  </div>
-
                   <div class="form-group">
                     <label class="form-label" for="accountNumber">Account Number <span class="required-star">*</span></label>
                     <div class="input-wrapper">
