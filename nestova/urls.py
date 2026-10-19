@@ -30,6 +30,13 @@ from django.views.decorators.csrf import csrf_exempt
 def health(request):
     return HttpResponse("ok", status=200)
 
+
+def indexnow_key(request):
+    return HttpResponse(
+        '8ba8973ffc2f4f8f81e991d958529808',
+        content_type='text/plain'
+    )
+
 # Sitemap configuration
 sitemaps = {
     'properties': PropertySitemap,
@@ -45,7 +52,7 @@ urlpatterns = [
     # SEO URLs
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', TemplateView.as_view(template_name='robots_seo.txt', content_type='text/plain'), name='robots_txt'),
-    
+    path('8ba8973ffc2f4f8f81e991d958529808.txt', indexnow_key),
     # IMPORTANT: Custom auth URLs MUST come BEFORE allauth to prevent override
     path("", include("users.urls")),  # Custom login/register at /login/ and /register/
     
