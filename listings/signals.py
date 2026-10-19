@@ -3,6 +3,9 @@ from django.dispatch import receiver
 from property.models import Property
 from .utils.indexnow import notify_indexnow
 from .models import ListingPackage
+from django.urls import reverse
+
+
 
 @receiver(post_delete, sender=Property)
 def on_property_deleted(sender, instance, **kwargs):
@@ -76,9 +79,12 @@ def on_property_saved(sender, instance, created, **kwargs):
 @receiver(post_save, sender=ListingPackage)
 def submit_package_to_indexnow(sender, instance, created, **kwargs):
     """
-    Fires every time a ListingPackage plan is saved.
-    Only submits if the package is active.
+    Fires every time a ListingPackage is saved.
+    Submits the package detail page URL to Bing IndexNow.
+    URL pattern: /listings/package/<slug>/
     """
     if instance.is_active:
-        url = f'https://nestovaproperty.com/pricing/{instance.slug}/'
-        notify_indexnow(url)        
+        # Uses your exact URL name from urls.py: name='package_detail'
+        path = reverse('listings:package_detail', kwargs={'slug': instance.slug})
+        url = f'https://nestovaproperty.com{path}'
+        notify_indexnow(url)
