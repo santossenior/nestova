@@ -95,6 +95,8 @@ def apartment_list(request):
         'cities':          cities,
         'apartmentchoice': apartmentchoice,
         'active_tab':      active_tab,
+        'page_title':      'Short Let Apartments in Nigeria — Lagos & Abuja Serviced Apartments | Nestova',
+        'meta_description': 'Book luxury short let apartments, vacation homes, and serviced suites in Lagos, Abuja, and Port Harcourt. Verified hosts and instant booking on Nestova.',
     }
 
     return render(request, 'booking/apartment_list.html', context)
@@ -109,6 +111,8 @@ def scraped_detail(request, pk):
         'listing': listing,
         'agent_whatsapp': AGENT_WHATSAPP,
         'agent_whatsapp_url': AGENT_WHATSAPP_URL,
+        'page_title': f"{listing.title} — Short Let in {listing.city or 'Nigeria'} | Nestova",
+        'meta_description': f"View details and book {listing.title} short let apartment in {listing.location or listing.city or 'Nigeria'} on Nestova.",
     }
     return render(request, 'booking/scraped_detail.html', context)
 
@@ -146,6 +150,8 @@ def apartment_detail(request, slug):
         'images': images,
         'upcoming_bookings': bookings,
         'amenities': apartment.get_amenities_list(),
+        'page_title': f"{apartment.title} — Short Let Apartment in {apartment.city} | Nestova",
+        'meta_description': (apartment.description[:155] + '...') if apartment.description else f"Book {apartment.title} serviced short let apartment in {apartment.city}. Fully furnished with premium amenities on Nestova.",
     }
     
     return render(request, 'booking/apartment_detail.html', context)

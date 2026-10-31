@@ -4,13 +4,7 @@
 
 {% block title %}{{ developer.name }} — Real Estate Developer | Nestova{% endblock %}
 
-{% block seo_meta %}
-<meta name="description" content="{% if developer.tagline %}{{ developer.tagline }}{% else %}Explore {{ developer.name }}'s property portfolio on Nestova.{% endif %}">
-<meta property="og:title" content="{{ developer.name }} | Nestova">
-{% if developer.banner_image %}
-<meta property="og:image" content="{{ developer.banner_image.url }}">
-{% endif %}
-{% endblock %}
+
 
 {% block extra_head %}
 <style>

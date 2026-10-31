@@ -21,7 +21,10 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
 from django.http import HttpResponse
-from core.sitemaps import PropertySitemap, ProductSitemap, BlogSitemap, StaticPagesSitemap
+from core.sitemaps import (
+    PropertySitemap, ProductSitemap, BlogSitemap, StaticPagesSitemap,
+    DeveloperSitemap, ApartmentSitemap, AgentSitemap, ValpaintProductSitemap,
+)
 from django.http import JsonResponse
 from django.db import connection
 from django.views.decorators.csrf import csrf_exempt
@@ -40,7 +43,11 @@ def indexnow_key(request):
 # Sitemap configuration
 sitemaps = {
     'properties': PropertySitemap,
+    'developers': DeveloperSitemap,
+    'apartments': ApartmentSitemap,
+    'agents': AgentSitemap,
     'products': ProductSitemap,
+    'valpaint': ValpaintProductSitemap,
     'blog': BlogSitemap,
     'static': StaticPagesSitemap,
 }

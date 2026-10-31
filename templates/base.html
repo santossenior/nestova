@@ -16,7 +16,7 @@
   {% include 'includes/seo_meta.html' %}
   {% endblock seo_meta %}
 
-  <title>{% block title %}NESTOVA - Your Premier Real Estate Platform in Nigeria{% endblock %}</title>
+  <title>{% block title %}{% if page_title %}{{ page_title }}{% else %}NESTOVA - Your Premier Real Estate Platform in Nigeria{% endif %}{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
@@ -2419,14 +2419,18 @@
           <div class="footer-links">
             <h4 class="footer-col-title">Explore</h4>
             <ul>
-              <li><a href="{% url 'apartment_list' %}"><i class="bi bi-chevron-right"></i>All Short Lets</a></li>
-              <li><a href="{% url 'developers_list' %}"><i class="bi bi-chevron-right"></i>New Developments</a></li>
-              <li><a href="{% url 'services:all_services' %}"><i class="bi bi-chevron-right"></i>All Services</a></li>
-              <li><a href="{% url 'services:all_services' %}"><i class="bi bi-chevron-right"></i>Property Management</a></li>
+              <li><a href="{% url 'apartment_list' %}"><i class="bi bi-chevron-right"></i>Short Let Apartments</a></li>
+              <li><a href="{% url 'developers_list' %}"><i class="bi bi-chevron-right"></i>Developers</a></li>
+              <li><a href="{% url 'agents' %}"><i class="bi bi-chevron-right"></i>Verified Realtors</a></li>
+              <li><a href="{% url 'listings:pricing' %}"><i class="bi bi-chevron-right"></i>Listing Plans</a></li>
+              <li><a href="{% url 'services:all_services' %}"><i class="bi bi-chevron-right"></i>Ecosystem Hub</a></li>
+              <li><a href="{% url 'valpaint_home' %}"><i class="bi bi-chevron-right"></i>Valpaint Italy</a></li>
+              <li><a href="{% url 'services:interior_design_request' %}"><i class="bi bi-chevron-right"></i>Interior Design</a></li>
               <li><a href="{% url 'shop:product_list' %}"><i class="bi bi-chevron-right"></i>Shop</a></li>
               <li><a href="{% url 'post_list' %}"><i class="bi bi-chevron-right"></i>Blog &amp; Insights</a></li>
               <li><a href="{% url 'about' %}"><i class="bi bi-chevron-right"></i>About Nestova</a></li>
               <li><a href="{% url 'contact' %}"><i class="bi bi-chevron-right"></i>Contact Us</a></li>
+              <li><a href="{% url 'faq' %}"><i class="bi bi-chevron-right"></i>Help &amp; FAQs</a></li>
               <li><a href="{% url 'privacy_policy' %}"><i class="bi bi-chevron-right"></i>Privacy Policy</a></li>
             </ul>
           </div>
@@ -2491,9 +2495,10 @@
           </div>
           <div class="col-lg-6 col-md-12">
             <div class="footer-bottom-links">
-              <a href="{% url "privacy_policy" %}">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-              <a href="#">Cookie Policy</a>
+              <a href="{% url 'about' %}">About Us</a>
+              <a href="{% url 'contact' %}">Contact</a>
+              <a href="{% url 'faq' %}">FAQs</a>
+              <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
             </div>
           </div>
         </div>

@@ -3,12 +3,21 @@ Allow: /
 Allow: /static/
 Allow: /media/
 Allow: /developers/
+Allow: /services/
+Allow: /valpaint/
+Allow: /agents/
+Allow: /bookings/
+Allow: /blog/
+Allow: /shop/
 
 Disallow: /admin/
 Disallow: /accounts/
 Disallow: /api/
 Disallow: /static/admin/
+Disallow: /listings/dashboard/
+Disallow: /shop/cart/
+Disallow: /shop/checkout/
+Disallow: /shop/orders/
 Disallow: /search/
 
 Sitemap: https://nestovaproperty.com/sitemap.xml
-

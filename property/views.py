@@ -1,4 +1,4 @@
-﻿# views.py
+# views.py
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Property, State, City, PropertyType, PropertyApplication, Developer, PaymentAccount
@@ -95,6 +95,8 @@ def homepage(request):
                 'latest_posts': recent_blog_posts,  # alias for index.html template
                 'featured_agents': featured_agents,
                 'featured_developers': featured_developers,
+                'page_title': 'Nestova — Premier Real Estate, Properties & Short Lets in Nigeria',
+                'meta_description': 'Find your dream property in Nigeria with Nestova. Browse verified listings, houses for sale, apartments for rent, and short lets across Lagos, Abuja, and Port Harcourt.',
             }
 
             # Cache for ALL users — 5 minutes
@@ -267,6 +269,8 @@ def search_properties(request):
     context = {
         'properties': properties,
         'search_params': request.GET,
+        'page_title': 'Search Properties in Nigeria | Nestova',
+        'meta_description': 'Search verified properties for sale and rent across Nigeria. Find apartments, duplexes, land, and commercial properties on Nestova.',
     }
     
     return render(request, 'estate/search_results.html', context)
@@ -654,6 +658,8 @@ def property_list(request):
         'property_types': property_types,
         'search_params': request.GET, # To keep filter values in inputs
         'featured_sidebar': featured_sidebar,
+        'page_title': 'Properties for Sale & Rent in Nigeria — Houses, Flats & Land | Nestova',
+        'meta_description': 'Browse verified properties for sale and rent across Nigeria. Find apartments, duplexes, commercial offices, and land in Lagos, Abuja, Port Harcourt, and more.',
     }
     
     return render(request, 'estate/properties.html', context)
@@ -673,6 +679,8 @@ def developers_list(request):
         'page_obj': page_obj,
         'developers': page_obj,
         'total_count': developers.count(),
+        'page_title': 'Real Estate Developers in Nigeria — Top Property Developers | Nestova',
+        'meta_description': "Discover Nigeria's premier real estate developers, leading residential estates, off-plan projects, and luxury commercial developments on Nestova.",
     })
 
 
@@ -716,6 +724,8 @@ def developer_detail(request, slug):
         'properties': page_obj,
         'listing_type': listing_type,
         'tab_counts': tab_counts,
+        'page_title': f"{developer.name} — Real Estate Projects & Developments | Nestova",
+        'meta_description': developer.tagline or f"Explore verified properties and master-planned developments by {developer.name} in Nigeria on Nestova.",
     })
 
 
@@ -757,5 +767,7 @@ def user_properties(request, username):
         'agent': agent,
         'properties': properties,
         'total_properties': properties_list.count(),
+        'page_title': f"Properties Listed by {user_name} | Nestova",
+        'meta_description': f"Browse all verified properties, houses, and apartments listed by {user_name} on Nestova.",
     }
     return render(request, 'agents/agent_properties.html', context)

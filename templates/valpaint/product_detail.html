@@ -3,10 +3,7 @@
 
 {% block title %}{{ page_title }}{% endblock %}
 
-{% block seo_meta %}
-<meta name="description" content="{{ product.meta_description|default:product.short_desc }}">
-{% if product.image %}<meta property="og:image" content="{{ product.image.url }}">{% endif %}
-{% endblock %}
+
 
 {% block extra_head %}
 <link rel="stylesheet" href="{% static 'valpaint/css/valpaint.css' %}">

@@ -229,4 +229,8 @@ def interior_design_request(request):
                 'phone': getattr(request.user, 'phone', ''),
             }
 
-    return render(request, 'services/interior_design_request.html', {'form': form})
+    return render(request, 'services/interior_design_request.html', {
+        'form': form,
+        'page_title': 'Luxury Interior Design & Furnishing Services | Nestova',
+        'meta_description': 'Transform your home or office with Nestova Interior Design. Bespoke luxury styling, Italian finishes, smart home integrations, and space planning across Nigeria.',
+    })

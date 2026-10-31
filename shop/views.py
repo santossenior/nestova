@@ -177,6 +177,8 @@ def product_list(request):
         'query': query,
         'current_category': category_slug,
         'current_sort': sort_by,
+        'page_title': 'Shop Smart Home Devices, Security & Essentials | Nestova Shop',
+        'meta_description': 'Browse smart home electronics, SmartShield security gadgets, decor, and home essentials on Nestova Shop. Fast delivery across Nigeria.',
     }
     return render(request, 'shop/product_list.html', context)
 
@@ -215,6 +217,8 @@ def product_detail(request, slug):
         'in_wishlist': in_wishlist,
         'average_rating': product.get_average_rating(),
         'reviews_count': reviews.count(),
+        'page_title': f"{product.name} — {product.brand or 'Nestova Shop'}",
+        'meta_description': product.short_description or (product.description[:155] + '...') if product.description else f"Buy {product.name} on Nestova Shop.",
     }
     return render(request, 'shop/product_detail.html', context)
 
@@ -235,6 +239,8 @@ def category_products(request, slug):
     context = {
         'category': category,
         'products': page_obj,
+        'page_title': f"{category.name} — Smart Home & Living | Nestova Shop",
+        'meta_description': f"Browse {category.name} on Nestova Shop. Find quality smart devices, home essentials, and security solutions in Nigeria.",
     }
     return render(request, 'shop/category_products.html', context)
 

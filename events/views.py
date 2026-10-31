@@ -77,6 +77,8 @@ def all_events(request):
         'active_year': active_year,
         'total_count': total_count,
         'year_range':  year_range,
+        'page_title':  'Community Events & Real Estate Summits | Nestova',
+        'meta_description': 'Explore community events, property expos, investor dinners, and agent networking summits hosted by Nestova across Nigeria.',
     }
  
     return render(request, 'estate/all_events.html', context)

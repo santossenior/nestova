@@ -292,6 +292,8 @@ def pricing_plans(request):
     return render(request, 'listings/pricing.html', {
         'packages':          packages,
         'user_subscription': user_subscription,
+        'page_title':        'Listing Packages & Subscription Plans | Nestova',
+        'meta_description':  'Choose the right listing package to advertise your real estate properties in Nigeria. Affordable subscription plans and listing slots for agents and owners.',
     })
 
 
@@ -312,6 +314,8 @@ def package_detail(request, slug):
         'other_packages':    other_packages,
         'user_subscription': user_subscription,
         'is_current_plan':   is_current_plan,
+        'page_title':        f"{package.name} Listing Plan | Nestova",
+        'meta_description':  f"Subscribe to the {package.name} listing package on Nestova. Get {package.property_limit} property slots and boost your real estate reach in Nigeria.",
     })
 
 

@@ -22,7 +22,8 @@ def valpaint_home(request):
         'featured':     featured,
         'all_finishes': all_finishes,
         'enquiry_form': enquiry_form,
-        'page_title':   'Valpaint — Premium Italian Decorative Paints',
+        'page_title':   'Valpaint — Premium Italian Decorative Paints | Nestova',
+        'meta_description': 'Discover Valpaint luxury Italian decorative paints, textured finishes, metallic effects, and Venetian plasters in Nigeria. Exclusively distributed by Nestova.',
         'active_nav':   'valpaint',
     }
     return render(request, 'valpaint/home.html', context)
@@ -63,7 +64,8 @@ def product_list(request):
         'active_fin':   finish_slug,
         'active_use':   use_type,
         'search_query': q,
-        'page_title':   'All Valpaint Products',
+        'page_title':   'Valpaint Product Catalogue — Luxury Decorative Paints | Nestova',
+        'meta_description': 'Browse the full Valpaint Italy decorative paint collection in Nigeria. Interior and exterior textured plasters, metallic paints, and luxury wall finishes.',
         'active_nav':   'valpaint',
     }
     return render(request, 'valpaint/product_list.html', context)
@@ -79,7 +81,8 @@ def category_view(request, slug):
     context = {
         'category':   category,
         'products':   products,
-        'page_title': f'Valpaint — {category.name}',
+        'page_title': f"Valpaint {category.name} — Luxury Italian Paints | Nestova",
+        'meta_description': f"Explore Valpaint {category.name} collection. High-end Italian decorative wall paints and textures for luxury homes and commercial spaces in Nigeria.",
         'active_nav': 'valpaint',
     }
     return render(request, 'valpaint/category.html', context)
@@ -97,7 +100,8 @@ def product_detail(request, slug):
         'product':      product,
         'related':      related,
         'enquiry_form': enquiry_form,
-        'page_title':   f'{product.name} — Valpaint at Nestova',
+        'page_title':   f"{product.name} — Valpaint Luxury Paint | Nestova",
+        'meta_description': product.meta_description or product.short_desc or f"Explore {product.name} Italian luxury decorative paint by Valpaint at Nestova in Nigeria.",
         'active_nav':   'valpaint',
     }
     return render(request, 'valpaint/product_detail.html', context)

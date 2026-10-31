@@ -36,7 +36,9 @@ def post_lists(request):
     
     context = {
         'posts': posts,
-        'paginator': paginator
+        'paginator': paginator,
+        'page_title': 'Real Estate Blog, Insights & Property News | Nestova',
+        'meta_description': 'Stay informed with expert Nigerian real estate advice, market trends, home buying guides, and property investment tips from Nestova.',
     }
     return render(request, 'estate/blog.html', context)
 
@@ -86,7 +88,15 @@ def post_details(request, slug, year, month, day):
             })
         
         
-        return render(request, "estate/blog-details.html", {"post": post, "comment_post": comment_post, "comment_posts": comment_posts, 'comment_count': comment_count})
+        context = {
+            "post": post,
+            "comment_post": comment_post,
+            "comment_posts": comment_posts,
+            'comment_count': comment_count,
+            'page_title': f"{post.name} | Nestova Blog",
+            'meta_description': (post.text[:155] + '...') if post.text else f"Read {post.name} on Nestova Blog.",
+        }
+        return render(request, "estate/blog-details.html", context)
     
     except Post.DoesNotExist:
         logger.error(f"Blog post not found: slug={slug}, date={year}/{month}/{day}")

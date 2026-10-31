@@ -546,10 +546,13 @@ def agent_profile(request, slug):
     # Get agent statistics
     total_properties = Property.objects.filter(agent=agent, is_active=True).count()
     
+    agent_name = agent.user.get_full_name() or agent.user.username
     context = {
         'agent': agent,
         'recent_properties': recent_properties,
         'total_properties': total_properties,
+        'page_title': f"{agent_name} — Verified Real Estate Agent | Nestova",
+        'meta_description': f"View verified property listings, houses, and land represented by {agent_name}, licensed real estate agent on Nestova.",
     }
     
     return render(request, 'agents/agent_profile_dynamic.html', context)
@@ -636,6 +639,8 @@ def agent_search(request):
         'query': query,
         'verified_only': verified_only,
         'total': paginator.count,
+        'page_title': f"Search: {query} — Verified Realtors | Nestova" if query else "Find a Realtor — Verified Real Estate Agents in Nigeria | Nestova",
+        'meta_description': f"Find verified real estate agents matching '{query}' on Nestova." if query else "Search verified real estate agents across Lagos, Abuja, Port Harcourt and Nigeria. Find trusted agents to help you buy, sell or rent.",
     }
     return render(request, 'agents/agent_search.html', context)
 
@@ -668,6 +673,8 @@ def agent_properties(request, slug):
         'user_name': user_name,
         'properties': properties,
         'total_properties': properties_list.count(),
+        'page_title': f"Properties by {user_name} | Nestova",
+        'meta_description': f"Browse all verified properties, houses, and apartments listed by {user_name} on Nestova.",
     }
     
     return render(request, 'agents/agent_properties.html', context)
