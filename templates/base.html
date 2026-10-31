@@ -1,4 +1,4 @@
-﻿{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,11 +71,12 @@
   <link href="{% static 'assets/vendor/drift-zoom/drift-basic.css' %}" rel="stylesheet" media="print"
     onload="this.media='all'">
 
-  <!-- Owl Carousel (self-hosted via WhiteNoise) -->
-  <link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.carousel.min.css' %}"
+  <!-- Owl Carousel -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
     media="print" onload="this.media='all'" />
-  <link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.theme.default.min.css' %}"
-    media="print" onload="this.media='all'" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" media="print"
+    onload="this.media='all'" />
 
   <!-- CDN Libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" media="print"
@@ -84,8 +85,10 @@
     onload="this.media='all'" />
 
   <noscript>
-    <link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.carousel.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'assets/vendor/owl-carousel/owl.theme.default.min.css' %}" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
     <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
@@ -2583,9 +2586,8 @@
   <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}" defer></script>
   <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}" defer></script>
   <script src="{% static 'assets/vendor/drift-zoom/Drift.min.js' %}" defer></script>
-  <!-- jQuery + OwlCarousel self-hosted (no external CDN round-trip) -->
-  <script src="{% static 'assets/vendor/jquery/jquery.min.js' %}" defer></script>
-  <script src="{% static 'assets/vendor/owl-carousel/owl.carousel.min.js' %}" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" defer></script>
 
   <!-- Main JS -->
   <script src="{% static 'assets/js/main.js' %}" defer></script>
