@@ -1,4 +1,4 @@
-# views.py
+﻿# views.py
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Property, State, City, PropertyType, PropertyApplication, Developer, PaymentAccount
@@ -16,58 +16,75 @@ logger = logging.getLogger(__name__)
 
 def homepage(request):
     """Homepage with property search"""
-    # Cache the homepage context for anonymous users only (5 minutes)
-    cache_key = 'homepage_context'
-    context = None
-    if not request.user.is_authenticated:
-        context = cache.get(cache_key)
+    # Cache heavy DB data for ALL users (anonymous + authenticated).
+    # Only non-user-specific data is stored so it is safe to share globally.
+    cache_key = 'homepage_db_data_v2'
+    db_data = cache.get(cache_key)
 
-    if context is None:
+    if db_data is None:
         try:
-            # Get all states for dropdown
-            states = State.objects.filter(is_active=True)
-            
-            # Get property types
-            property_types = PropertyType.objects.all()
-            
-            # Featured properties
-            featured_properties = Property.objects.filter(
-                is_featured=True
-            ).select_related('state', 'city', 'property_type', 'status', 'agent', 'listed_by')[:6]
-            
-            # Premium properties for carousel
-            premium_properties = Property.objects.filter(
-                is_premium=True
-            ).select_related('state', 'city', 'property_type', 'status', 'agent', 'listed_by').order_by('-created_at')[:3]
-            # Get all properties for display
-            all_properties = Property.objects.select_related(
-                'state', 'city', 'property_type', 'status'
-            )[:10]
-            
-            # Get pricing packages for "Listing Packages & Slots" section
             from listings.models import ListingPackage
-            pricing_packages = ListingPackage.objects.filter(is_active=True).order_by('price')
-            
-            # Get recent blog posts
             from blogs.models import Post
-            recent_blog_posts = Post.objects.filter(
-                status='published'
-            ).select_related('author', 'category').order_by('-publish')[:3]
+            from agents.models import Agent
+
+            # Get all states for dropdown
+            states = list(State.objects.filter(is_active=True))
+
+            # Get property types
+            property_types = list(PropertyType.objects.all())
+
+            # Featured properties — prefetch images to avoid N+1 queries per card
+            featured_properties = list(
+                Property.objects.filter(
+                    is_featured=True
+                ).select_related(
+                    'state', 'city', 'property_type', 'status', 'agent', 'listed_by'
+                ).prefetch_related('images')[:6]
+            )
+
+            # Premium properties for hero carousel — prefetch images
+            premium_properties = list(
+                Property.objects.filter(
+                    is_premium=True
+                ).select_related(
+                    'state', 'city', 'property_type', 'status', 'agent', 'listed_by'
+                ).prefetch_related('images').order_by('-created_at')[:3]
+            )
+
+            # All properties for display section — prefetch images
+            all_properties = list(
+                Property.objects.select_related(
+                    'state', 'city', 'property_type', 'status'
+                ).prefetch_related('images')[:10]
+            )
+
+            # Get pricing packages for "Listing Packages & Slots" section
+            pricing_packages = list(ListingPackage.objects.filter(is_active=True).order_by('price'))
+
+            # Get recent blog posts
+            recent_blog_posts = list(
+                Post.objects.filter(
+                    status='published'
+                ).select_related('author', 'category').order_by('-publish')[:3]
+            )
 
             # Get featured agents for homepage
-            from agents.models import Agent
-            featured_agents = Agent.objects.filter(
-                is_active=True,
-                verification_status='verified'
-            ).select_related('user')[:6]
+            featured_agents = list(
+                Agent.objects.filter(
+                    is_active=True,
+                    verification_status='verified'
+                ).select_related('user')[:6]
+            )
 
             # Get featured developers for homepage
-            featured_developers = Developer.objects.filter(
-                is_featured=True,
-                is_active=True
-            ).order_by('-created_at')[:5]
+            featured_developers = list(
+                Developer.objects.filter(
+                    is_featured=True,
+                    is_active=True
+                ).order_by('-created_at')[:5]
+            )
 
-            context = {
+            db_data = {
                 'states': states,
                 'property_types': property_types,
                 'featured_properties': featured_properties,
@@ -80,22 +97,26 @@ def homepage(request):
                 'featured_developers': featured_developers,
             }
 
-            if not request.user.is_authenticated:
-                cache.set(cache_key, context, 300)  # 5 minutes
+            # Cache for ALL users — 5 minutes
+            cache.set(cache_key, db_data, 300)
 
         except Exception as e:
             logger.error(f"Error in homepage view: {str(e)}", exc_info=True)
-            context = None
+            db_data = None
+
+    context = db_data
 
     if context is None:
         return render(request, 'estate/index.html', {
             'states': [],
             'property_types': [],
             'featured_properties': [],
+            'premium_properties': [],
             'all_properties': [],
             'pricing_packages': [],
             'recent_blog_posts': [],
             'latest_posts': [],
+            'featured_agents': [],
             'featured_developers': [],
             'error_message': 'Some content may not be available at the moment.',
         })
