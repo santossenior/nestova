@@ -97,8 +97,8 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'users.middleware.SessionInterruptedMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'users.middleware.SessionInterruptedMiddleware',  # Must be AFTER SessionMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -335,7 +335,15 @@ else:
 # SESSION CONFIGURATION
 # ==================================
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+# Use plain 'db' backend in production to avoid a race condition during Google
+# OAuth: cached_db can serve a stale cache entry for a session that allauth
+# already flushed, causing SessionInterrupted on the callback request.
+# In development, locmem cache makes cached_db safe to use.
+if DEBUG:
+    SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+else:
+    SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 SESSION_CACHE_ALIAS = 'default'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_COOKIE_SECURE = not DEBUG
