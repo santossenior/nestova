@@ -15,7 +15,9 @@
   "@type": "Product",
   "name": "{{ product.name|escapejs }}",
   "description": "{{ product.short_description|striptags|truncatewords:50|escapejs }}",
-  "image": "{% if product.main_image %}{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.url }}{% endif %}",
+  {% if product.main_image %}
+  "image": "{{ product.main_image.url }}",
+  {% endif %}
   "brand": { "@type": "Brand", "name": "{{ product.brand|escapejs }}" },
   "sku": "{{ product.sku }}",
   "mpn": "{{ product.model_number }}",
@@ -24,16 +26,74 @@
     "url": "{{ request.build_absolute_uri }}",
     "priceCurrency": "NGN",
     "price": "{% if product.discount_price %}{{ product.discount_price }}{% else %}{{ product.price }}{% endif %}",
+    "validFrom": "{{ product.created_at|date:'Y-m-d' }}",
     "priceValidUntil": "{{ product.updated_at|date:'Y-12-31' }}",
     "availability": "{% if product.is_in_stock %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
-    "itemCondition": "https://schema.org/NewCondition"
+    "itemCondition": "https://schema.org/NewCondition",
+    "seller": {
+      "@type": "Organization",
+      "name": "Nestova",
+      "url": "https://nestovaproperty.com"
+    },
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "applicableCountry": "NG",
+      "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+      "merchantReturnDays": 7,
+      "returnMethod": "https://schema.org/ReturnByMail",
+      "returnFees": "https://schema.org/FreeReturn"
+    },
+    "shippingDetails": {
+      "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0",
+        "currency": "NGN"
+      },
+      "shippingDestination": {
+        "@type": "DefinedRegion",
+        "addressCountry": "NG"
+      },
+      "deliveryTime": {
+        "@type": "ShippingDeliveryTime",
+        "handlingTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 3,
+          "unitCode": "DAY"
+        },
+        "transitTime": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 5,
+          "unitCode": "DAY"
+        }
+      }
+    }
   }
   {% if average_rating > 0 %}
   ,"aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "{{ average_rating }}",
+    "bestRating": "5",
+    "worstRating": "1",
     "reviewCount": "{{ reviews_count }}"
   }
+  {% endif %}
+  {% if reviews %}
+  ,"review": [{% for review in reviews %}{% if forloop.counter <= 5 %}{
+    "@type": "Review",
+    "author": { "@type": "Person", "name": "{{ review.user.get_full_name|default:review.user.username|escapejs }}" },
+    "datePublished": "{{ review.created_at|date:'Y-m-d' }}",
+    "name": "{{ review.title|escapejs }}",
+    "reviewBody": "{{ review.comment|truncatewords:50|escapejs }}",
+    "reviewRating": {
+      "@type": "Rating",
+      "ratingValue": "{{ review.rating }}",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  }{% if not forloop.last and forloop.counter < 5 %},{% endif %}{% endif %}{% endfor %}]
   {% endif %}
 }
 </script>
