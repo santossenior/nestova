@@ -1,0 +1,607 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Return & Refund Policy | Nestova Shop{% endblock %}
+
+{% block seo_meta %}
+{% include 'includes/seo_meta.html' %}
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Return & Refund Policy",
+  "url": "https://nestovaproperty.com/shop/return-policy/",
+  "description": "Nestova Shop return and refund policy. 7-day returns on eligible items. Free return shipping on defective products.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nestova",
+    "url": "https://nestovaproperty.com"
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<style>
+  .rp-hero {
+    padding: 120px 5vw 60px;
+    background: linear-gradient(180deg, rgba(13,27,62,0.5) 0%, var(--obsidian) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .rp-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.07), transparent);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
+  .rp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 18px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06));
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .rp-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .rp-hero h1 em { color: var(--gold-light); font-style: italic; }
+  .rp-hero-sub {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 540px;
+  }
+  .rp-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .rp-breadcrumb a, .rp-breadcrumb span {
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.38);
+    text-decoration: none;
+  }
+  .rp-breadcrumb a:hover { color: var(--gold-light); }
+  .rp-breadcrumb .sep { color: rgba(201,168,76,0.3); }
+  .rp-breadcrumb .current { color: var(--gold); font-weight: 600; }
+
+  /* Main content */
+  .rp-section {
+    padding: 60px 5vw 100px;
+  }
+  .rp-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .rp-layout { grid-template-columns: 1fr; }
+    .rp-nav { display: none; }
+  }
+
+  /* Sticky sidebar nav */
+  .rp-nav {
+    position: sticky;
+    top: 100px;
+    background: rgba(12,12,18,0.82);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 20px;
+    padding: 24px;
+  }
+  .rp-nav-title {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .rp-nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    color: rgba(245,240,232,0.55);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
+  }
+  .rp-nav a:hover, .rp-nav a.active {
+    background: rgba(201,168,76,0.08);
+    color: var(--gold-light);
+  }
+  .rp-nav a i { font-size: 0.75rem; color: var(--gold); }
+
+  /* Content card */
+  .rp-card {
+    background: rgba(12,12,18,0.82);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+  .rp-card::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,76,0.4), transparent);
+  }
+  .rp-card-body { padding: 40px; }
+  @media (max-width: 600px) { .rp-card-body { padding: 24px; } }
+
+  /* Section */
+  .rp-content-section {
+    padding-bottom: 36px;
+    margin-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .rp-content-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .rp-section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .rp-section-title span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gold);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .rp-para {
+    font-size: 0.93rem;
+    color: rgba(245,240,232,0.65);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .rp-para:last-child { margin-bottom: 0; }
+
+  /* Info boxes */
+  .rp-info-box {
+    display: flex;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    margin: 18px 0;
+  }
+  .rp-info-box.gold {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .rp-info-box.green {
+    background: rgba(16,185,129,0.07);
+    border: 1px solid rgba(16,185,129,0.2);
+  }
+  .rp-info-box.red {
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.2);
+  }
+  .rp-info-box i {
+    font-size: 1.1rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .rp-info-box.gold i { color: var(--gold); }
+  .rp-info-box.green i { color: #34d399; }
+  .rp-info-box.red i   { color: #f87171; }
+  .rp-info-box p { font-size: 0.88rem; color: rgba(245,240,232,0.7); line-height: 1.65; margin: 0; }
+  .rp-info-box strong { color: var(--text-primary); }
+
+  /* Steps */
+  .rp-steps { display: flex; flex-direction: column; gap: 16px; margin: 18px 0; }
+  .rp-step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+  }
+  .rp-step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #0A0A0F;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .rp-step-text h5 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 4px;
+  }
+  .rp-step-text p { font-size: 0.84rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* Eligibility grid */
+  .rp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+  @media (max-width: 540px) { .rp-grid { grid-template-columns: 1fr; } }
+
+  .rp-grid-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+  .rp-grid-item.yes {
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.15);
+    color: rgba(245,240,232,0.7);
+  }
+  .rp-grid-item.no {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.15);
+    color: rgba(245,240,232,0.7);
+  }
+  .rp-grid-item i { margin-top: 2px; flex-shrink: 0; }
+  .rp-grid-item.yes i { color: #34d399; }
+  .rp-grid-item.no  i { color: #f87171; }
+
+  /* Timeline */
+  .rp-timeline { display: flex; flex-direction: column; gap: 0; margin: 18px 0; }
+  .rp-tl-item {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 24px;
+    position: relative;
+  }
+  .rp-tl-item:last-child { padding-bottom: 0; }
+  .rp-tl-dot-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .rp-tl-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid rgba(201,168,76,0.4);
+    margin-top: 4px;
+  }
+  .rp-tl-line {
+    flex: 1;
+    width: 1px;
+    background: rgba(201,168,76,0.15);
+    margin-top: 4px;
+  }
+  .rp-tl-item:last-child .rp-tl-line { display: none; }
+  .rp-tl-body h5 { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
+  .rp-tl-body p { font-size: 0.83rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
+
+  /* Updated badge */
+  .rp-updated {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  .rp-updated i { color: var(--gold); }
+
+  /* CTA at bottom */
+  .rp-cta {
+    margin-top: 40px;
+    padding: 28px 32px;
+    background: rgba(201,168,76,0.05);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .rp-cta-text h4 { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin: 0 0 4px; }
+  .rp-cta-text p  { font-size: 0.84rem; color: var(--text-muted); margin: 0; }
+  .btn-rp-contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 24px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #0A0A0F;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(201,168,76,0.3);
+  }
+  .btn-rp-contact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(201,168,76,0.45);
+    color: #0A0A0F;
+  }
+</style>
+
+<!-- Hero -->
+<div class="rp-hero">
+  <div class="rp-eyebrow"><i class="fa-solid fa-rotate-left"></i> Shop Policy</div>
+  <h1>Return &amp; <em>Refund</em> Policy</h1>
+  <p class="rp-hero-sub">We want you to be completely satisfied with every purchase. If something isn't right, we'll make it right.</p>
+  <div class="rp-breadcrumb">
+    <a href="{% url 'home' %}"><i class="fa-solid fa-house"></i> Home</a>
+    <span class="sep">›</span>
+    <a href="{% url 'shop:shop_home' %}">Shop</a>
+    <span class="sep">›</span>
+    <span class="current">Return Policy</span>
+  </div>
+</div>
+
+<!-- Content -->
+<section class="rp-section">
+  <div class="rp-layout">
+
+    <!-- Sidebar nav -->
+    <nav class="rp-nav">
+      <div class="rp-nav-title"><i class="fa-solid fa-list"></i> On This Page</div>
+      <a href="#overview"><i class="fa-solid fa-circle-info"></i> Overview</a>
+      <a href="#eligibility"><i class="fa-solid fa-circle-check"></i> Eligibility</a>
+      <a href="#how-to-return"><i class="fa-solid fa-box-open"></i> How to Return</a>
+      <a href="#refund-timeline"><i class="fa-solid fa-clock"></i> Refund Timeline</a>
+      <a href="#defective"><i class="fa-solid fa-triangle-exclamation"></i> Defective Items</a>
+      <a href="#non-returnable"><i class="fa-solid fa-ban"></i> Non-Returnable</a>
+      <a href="#contact"><i class="fa-solid fa-headset"></i> Contact Us</a>
+    </nav>
+
+    <!-- Main card -->
+    <div class="rp-card">
+      <div class="rp-card-body">
+
+        <div class="rp-updated">
+          <i class="fa-regular fa-calendar"></i>
+          Last updated: November 6, 2026
+        </div>
+
+        <!-- 1. Overview -->
+        <div id="overview" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-circle-info"></i></span>
+            Overview
+          </h2>
+          <p class="rp-para">
+            At Nestova Shop, we stand behind the quality of every product we sell. If you're not completely satisfied with your purchase, you may return eligible items within <strong>7 days</strong> of delivery for a full refund or exchange.
+          </p>
+          <div class="rp-info-box gold">
+            <i class="fa-solid fa-lightbulb"></i>
+            <p>To start a return, please contact our support team within <strong>7 days</strong> of receiving your order. Returns initiated after this window may not be accepted.</p>
+          </div>
+        </div>
+
+        <!-- 2. Eligibility -->
+        <div id="eligibility" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-circle-check"></i></span>
+            Return Eligibility
+          </h2>
+          <p class="rp-para">Items must meet the following conditions to be eligible for a return:</p>
+          <div class="rp-grid">
+            <div class="rp-grid-item yes">
+              <i class="fa-solid fa-check"></i>
+              <span>Returned within <strong>7 days</strong> of delivery</span>
+            </div>
+            <div class="rp-grid-item yes">
+              <i class="fa-solid fa-check"></i>
+              <span>Item is <strong>unused and undamaged</strong></span>
+            </div>
+            <div class="rp-grid-item yes">
+              <i class="fa-solid fa-check"></i>
+              <span>Original packaging and accessories included</span>
+            </div>
+            <div class="rp-grid-item yes">
+              <i class="fa-solid fa-check"></i>
+              <span>Proof of purchase / order number provided</span>
+            </div>
+            <div class="rp-grid-item no">
+              <i class="fa-solid fa-xmark"></i>
+              <span>Item has been installed or used</span>
+            </div>
+            <div class="rp-grid-item no">
+              <i class="fa-solid fa-xmark"></i>
+              <span>Tampered seals or removed serial numbers</span>
+            </div>
+            <div class="rp-grid-item no">
+              <i class="fa-solid fa-xmark"></i>
+              <span>Missing original box or accessories</span>
+            </div>
+            <div class="rp-grid-item no">
+              <i class="fa-solid fa-xmark"></i>
+              <span>Return requested after 7 days</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. How to Return -->
+        <div id="how-to-return" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-box-open"></i></span>
+            How to Initiate a Return
+          </h2>
+          <p class="rp-para">Follow these steps to return your item:</p>
+          <div class="rp-steps">
+            <div class="rp-step">
+              <div class="rp-step-num">1</div>
+              <div class="rp-step-text">
+                <h5>Contact Support</h5>
+                <p>Email us at <strong>support@nestovaproperty.com</strong> or use the WhatsApp button on our site with your order number and reason for return.</p>
+              </div>
+            </div>
+            <div class="rp-step">
+              <div class="rp-step-num">2</div>
+              <div class="rp-step-text">
+                <h5>Receive Return Authorisation</h5>
+                <p>Our team will review your request within <strong>24–48 hours</strong> and send you a Return Merchandise Authorisation (RMA) number and return address.</p>
+              </div>
+            </div>
+            <div class="rp-step">
+              <div class="rp-step-num">3</div>
+              <div class="rp-step-text">
+                <h5>Pack &amp; Ship the Item</h5>
+                <p>Securely repack the item in its original packaging and ship it to the address provided. Write your RMA number on the outside of the package.</p>
+              </div>
+            </div>
+            <div class="rp-step">
+              <div class="rp-step-num">4</div>
+              <div class="rp-step-text">
+                <h5>Refund Processed</h5>
+                <p>Once we receive and inspect the item, your refund will be processed within <strong>3–5 business days</strong> to your original payment method.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Refund Timeline -->
+        <div id="refund-timeline" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-clock"></i></span>
+            Refund Timeline
+          </h2>
+          <p class="rp-para">After we receive and inspect your returned item, here's what to expect:</p>
+          <div class="rp-timeline">
+            <div class="rp-tl-item">
+              <div class="rp-tl-dot-wrap"><div class="rp-tl-dot"></div><div class="rp-tl-line"></div></div>
+              <div class="rp-tl-body">
+                <h5>Day 1–2 — Inspection</h5>
+                <p>We inspect the returned item for eligibility. You'll receive an email confirmation of receipt.</p>
+              </div>
+            </div>
+            <div class="rp-tl-item">
+              <div class="rp-tl-dot-wrap"><div class="rp-tl-dot"></div><div class="rp-tl-line"></div></div>
+              <div class="rp-tl-body">
+                <h5>Day 2–3 — Approval</h5>
+                <p>If the return is approved, we process the refund to your original payment method (bank transfer or card).</p>
+              </div>
+            </div>
+            <div class="rp-tl-item">
+              <div class="rp-tl-dot-wrap"><div class="rp-tl-dot"></div><div class="rp-tl-line"></div></div>
+              <div class="rp-tl-body">
+                <h5>Day 3–5 — Refund Received</h5>
+                <p>Your bank or card provider may take an additional 2–5 business days to reflect the credit in your account.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rp-info-box green">
+            <i class="fa-solid fa-circle-check"></i>
+            <p>You will receive an email notification at every step of the refund process.</p>
+          </div>
+        </div>
+
+        <!-- 5. Defective Items -->
+        <div id="defective" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-triangle-exclamation"></i></span>
+            Defective or Wrong Items
+          </h2>
+          <p class="rp-para">
+            If you receive a defective, damaged, or incorrect item, we will cover the full cost of return shipping and send you a replacement or issue a full refund — no questions asked.
+          </p>
+          <div class="rp-info-box green">
+            <i class="fa-solid fa-truck"></i>
+            <p><strong>Free return shipping</strong> on all defective or incorrectly shipped items. Please report these issues within <strong>48 hours</strong> of delivery with photos of the damage.</p>
+          </div>
+        </div>
+
+        <!-- 6. Non-Returnable -->
+        <div id="non-returnable" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-ban"></i></span>
+            Non-Returnable Items
+          </h2>
+          <p class="rp-para">The following items cannot be returned:</p>
+          <div class="rp-info-box red">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <p>
+              • Items that have been <strong>installed, used, or activated</strong><br>
+              • Products with removed or tampered security seals<br>
+              • Items damaged by misuse, negligence, or improper installation<br>
+              • Custom-ordered or special-order products<br>
+              • Items returned without original packaging or accessories<br>
+              • Returns initiated after the 7-day window
+            </p>
+          </div>
+        </div>
+
+        <!-- 7. Contact -->
+        <div id="contact" class="rp-content-section">
+          <h2 class="rp-section-title">
+            <span><i class="fa-solid fa-headset"></i></span>
+            Governing Law
+          </h2>
+          <p class="rp-para">
+            This policy is governed by the laws of the Federal Republic of Nigeria. Any disputes arising from returns or refunds shall be resolved in accordance with Nigerian consumer protection regulations.
+          </p>
+        </div>
+
+        <!-- CTA -->
+        <div class="rp-cta">
+          <div class="rp-cta-text">
+            <h4>Need help with a return?</h4>
+            <p>Our support team is available Monday – Saturday, 9am – 6pm WAT.</p>
+          </div>
+          <a href="{% url 'contact' %}" class="btn-rp-contact">
+            <i class="fa-solid fa-headset"></i> Contact Support
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

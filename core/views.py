@@ -116,3 +116,15 @@ def privacy_policy(request):
         ),
     }
     return render(request, "estate/privacy.html", context)
+
+
+def return_policy(request):
+    context = {
+        'page_title': "Return & Refund Policy | Nestova Shop",
+        'meta_description': (
+            "Nestova Shop return and refund policy. Return eligible items within 7 days "
+            "of delivery. Free return shipping on defective or incorrect items."
+        ),
+        'structured_data': True,  # Suppress the generic org JSON-LD from seo_meta.html
+    }
+    return render(request, "shop/return_policy.html", context)

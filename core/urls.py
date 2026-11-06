@@ -13,6 +13,5 @@ urlpatterns = [
     path("dashboard/", views.dashboard_user, name="dashboard"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path("faq/", views.faq, name="faq"),
-    
-    
+    path("shop/return-policy/", views.return_policy, name="return_policy"),
 ]
