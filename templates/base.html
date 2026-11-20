@@ -1877,10 +1877,11 @@
             </ul>
           </li>
 
-          <!-- AGENTS / AGENTS-SEARCH is triggered from header-actions -->
+          <!-- ABOUT US -->
+          <li><a href="{% url 'about' %}">About Us</a></li>
 
-          <!-- BLOG -->
-          
+          <!-- FAQ -->
+          <li><a href="{% url 'faq' %}">FAQ</a></li>
 
           <!-- AUTH (mobile-only context) -->
           {% if request.user.is_authenticated %}
